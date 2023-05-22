@@ -82,7 +82,7 @@ router.get("/single/:id", async(req,res) => {
 })
 
 
-router.put("/:id", authAdmin, async (req, res) => {
+router.put("/:id", async (req, res) => {
   let validBody = validateProject(req.body);
   if (validBody.error) {
     return res.status(400).json(validBody.error.details);
