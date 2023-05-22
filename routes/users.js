@@ -112,9 +112,9 @@ router.patch("/changeRole/:id/:role", async (req, res) => {
   try {
     const id = req.params.id;
     const newRole = req.params.role;
-    if (id == req.tokenData._id || id == "63d2ebe2f1e441addf1e82ec") {
-      return res.status(401).json({ err: "You cant change your user role" })
-    }
+    // if (id == req.tokenData._id || id == "63d2ebe2f1e441addf1e82ec") {
+    //   return res.status(401).json({ err: "You cant change your user role" })
+    // }
     const data = await UserModel.updateOne({ _id: id }, { role: newRole })
     res.json(data);
   }
