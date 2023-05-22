@@ -9,15 +9,19 @@ const userSchema = new mongoose.Schema({
   password: String,
   phone: String,
   p_name: String,
-  building_name:String,
+  city_name: String,
+  street_name: String,
+  building_name: String,
   story: Number,
   apartment: Number,
   date_created: {
     type: Date, default: Date.now
   },
   role: {
-    type: String, default: "user"
-  }
+    type: String,
+    default: "User",
+    enum: ['Admin', 'Contractor', 'User']
+  },
 })
 
 
@@ -38,7 +42,9 @@ exports.validateUser = (_reqBody) => {
     password: Joi.string().min(4).max(150).required(),
     phone: Joi.string().min(6).max(30).required(),
     p_name: Joi.string().min(2).max(50).required(),
-    building_name: Joi.string().min(1).max(40).required(),
+    city_name: Joi.string().min(2).max(50).required(),
+    street_name: Joi.string().min(2).max(50).required(),
+    building_name: Joi.string().min(1).max(40).allow('', null),
     story: Joi.number().max(50).required(),
     apartment: Joi.number().max(300).required()
   })

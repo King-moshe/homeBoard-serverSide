@@ -22,7 +22,7 @@ router.get("/checkToken", auth, async (req, res) => {
   }
 })
 
-router.get("/usersList", authAdmin, async (req, res) => {
+router.get("/usersList", async (req, res) => {
   let perPage = Math.min(req.query.perPage, 20) || 20;
   let page = req.query.page - 1 || 0;
   let sort = req.query.sort || "_id"
