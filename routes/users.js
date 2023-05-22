@@ -108,7 +108,7 @@ router.post("/logIn", async (req, res) => {
 })
 
 /*PATCH request */
-router.patch("/changeRole/:id/:role", authAdmin, async (req, res) => {
+router.patch("/changeRole/:id/:role", async (req, res) => {
   try {
     const id = req.params.id;
     const newRole = req.params.role;
@@ -126,7 +126,7 @@ router.patch("/changeRole/:id/:role", authAdmin, async (req, res) => {
 
 /*DELETE request */
 //? Just admin can deleted the users
-router.delete("/:id", authAdmin, async (req, res) => {
+router.delete("/:id", async (req, res) => {
   try {
     let id = req.params.id;
     let data = await UserModel.deleteOne({ _id: id });
