@@ -55,6 +55,22 @@ router.get("/userInfo", auth, async (req, res) => {
 })
 
 
+router.get("/singleProject/:projectName/:buildingName",authAdmin, async (req, res) => {
+  const pName = req.params.projectName;
+  const BuildingName = req.params.buildingName;
+  
+  try {
+    let user = await UserModel.find({ $and: [{ p_name: pName }, { building_name: BuildingName }] }, { password: 0 });
+    console.log(user);
+    res.json(user);
+  }
+  catch (err) {
+    console.log(err);
+    res.status(502).json({ err })
+  }
+})
+
+
 /*All the POST requests*/
 // sign up
 // TODO: Add authAdmin
