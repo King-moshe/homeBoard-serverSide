@@ -9,7 +9,7 @@ router.get("/", async (req, res) => {
 })
 
 //?Only admin can see all projects 
-router.get("/projectsList",  async (req, res) => {
+router.get("/projectsList", authAdmin, async (req, res) => {
   let perPage = Math.min(req.query.perPage, 20) || 15;
   let page = req.query.page - 1 || 0;
   let sort = req.query.sort || "_id"
@@ -48,36 +48,15 @@ router.post("/", authAdmin, async (req, res) => {
     res.status(502).json({ err })
   }
 })
-// router.post("/", authAdmin, async (req, res) => {
-//   if (!req.tokenData.user) {
-//     return res.status(301).json({ msg: "user not valid" })
-//   }
-//   else {
-//     req.query.users_id;
-//     let validBody = validateProject(req.body);
-//     if (validBody.error) {
-//       return res.status(400).json(validBody.error.details);
-//     }
-//     try {
-//       req.body.admin_id = req.tokenData.user._id;
-//       let project = new ProjectModel(req.body);
-//       await project.save();
-//       res.status(201).json(project);
-//     }
-//     catch (err) {
-//       console.log(err);
-//       res.status(502).json({ err })
-//     }
-//   }
-// })
-router.get("/single/:id", async(req,res) => {
-  try{
-    let data = await ProjectModel.findOne({_id:req.params.id});
+
+router.get("/single/:id", async (req, res) => {
+  try {
+    let data = await ProjectModel.findOne({ _id: req.params.id });
     res.json(data);
   }
-  catch(err){
+  catch (err) {
     console.log(err);
-    res.status(502).json({err})
+    res.status(502).json({ err })
   }
 })
 
@@ -100,7 +79,7 @@ router.put("/:id", async (req, res) => {
 
 
 //? Just admin can deleted the project
-router.delete("/:id",  async (req, res) => {
+router.delete("/:id", async (req, res) => {
   try {
     let id = req.params.id;
     let data = await ProjectModel.deleteOne({ _id: id });
@@ -112,15 +91,15 @@ router.delete("/:id",  async (req, res) => {
   }
 })
 
-router.get("/count", async(req,res) => {
+router.get("/count", async (req, res) => {
   let perPage = Math.min(req.query.perPage, 20) || 5;
-  try{
+  try {
     let data = await ProjectModel.countDocuments(perPage);
-    res.json({count:data,pages:Math.ceil(data/perPage)})
+    res.json({ count: data, pages: Math.ceil(data / perPage) })
   }
-  catch(err){
+  catch (err) {
     console.log(err);
-    res.status(502).json({err})
+    res.status(502).json({ err })
   }
 })
 

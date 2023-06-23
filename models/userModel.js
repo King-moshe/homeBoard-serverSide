@@ -14,16 +14,18 @@ const userSchema = new mongoose.Schema({
   building_name: String,
   story: Number,
   apartment: Number,
+  files: Array,
+  comments: Array,
   date_created: {
-    type: Date, default: Date.now
+    type: Date,
+    default: Date.now
   },
   role: {
     type: String,
     default: "User",
     enum: ['Admin', 'Contractor', 'User']
   },
-})
-
+});
 
 exports.UserModel = mongoose.model("users", userSchema);
 
@@ -46,10 +48,47 @@ exports.validateUser = (_reqBody) => {
     street_name: Joi.string().min(2).max(50).required(),
     building_name: Joi.string().min(1).max(40).allow('', null),
     story: Joi.number().max(50).required(),
-    apartment: Joi.number().max(300).required()
-  })
+    apartment: Joi.number().max(300).required(),
+    files: Joi.array().max(11100).allow(null, ""),
+    comments: Joi.array().max(11100).allow(null, ""),
+  });
   return joiSchema.validate(_reqBody);
-}
+};
+
+exports.validateUserPut = (_reqBody) => {
+  let joiSchema = Joi.object({
+    name: Joi.string().min(2).max(150).allow(null, ""),
+    email: Joi.string().min(2).max(150).email().allow(null, ""),
+    phone: Joi.string().min(6).max(30).allow(null, ""),
+    p_name: Joi.string().min(2).max(50).allow(null, ""),
+    city_name: Joi.string().min(2).max(50).allow(null, ""),
+    street_name: Joi.string().min(2).max(50).allow(null, ""),
+    building_name: Joi.string().min(1).max(40).allow('', null),
+    story: Joi.number().max(50).allow(null, ""),
+    apartment: Joi.number().max(300).allow(null, ""),
+    files: Joi.array().max(11100).allow(null, ""),
+    comments: Joi.array().max(11100).allow(null, "")
+  });
+  return joiSchema.validate(_reqBody);
+};
+
+exports.validateUserPost = (_reqBody) => {
+  let joiSchema = Joi.object({
+    name: Joi.string().min(2).max(150).allow(null, ""),
+    email: Joi.string().min(2).max(150).email().allow(null, ""),
+    phone: Joi.string().min(6).max(30).allow(null, ""),
+    p_name: Joi.string().min(2).max(50).allow(null, ""),
+    city_name: Joi.string().min(2).max(50).allow(null, ""),
+    street_name: Joi.string().min(2).max(50).allow(null, ""),
+    building_name: Joi.string().min(1).max(40).allow('', null),
+    story: Joi.number().max(50).allow(null, ""),
+    apartment: Joi.number().max(300).allow(null, ""),
+    files: Joi.array().max(11100).allow(null, ""),
+    comments: Joi.array().max(11100).allow(null, ""),
+  });
+  return joiSchema.validate(_reqBody);
+};
+
 
 exports.validateLogin = (_reqBody) => {
   let joiSchema = Joi.object({

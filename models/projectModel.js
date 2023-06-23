@@ -1,9 +1,6 @@
 const mongoose = require("mongoose");
 const Joi = require("joi");
 
-
-
-
 let ProjectSchema = new mongoose.Schema({
   city_name: String,
   street_name: String,

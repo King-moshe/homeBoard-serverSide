@@ -29,7 +29,7 @@ exports.authAdmin = (req, res, next) => {
     // בודק אם הטוקן תקין או בתקוף
     let decodeToken = jwt.verify(token, config.token_secret);
     // בודק אם הטוקן שייך לאדמין
-    if (decodeToken.role != "admin") {
+    if (decodeToken.role != "Admin") {
       return res.status(401).json({ msg: "Just admin can be in this endpoint" })
     }
     // req -> יהיה זהה בכל הפונקציות שמורשרות באותו ראוטר

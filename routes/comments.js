@@ -16,9 +16,6 @@ router.get("/allComments", auth, async (req, res) => {
     let perPage = Math.min(req.query.perPage, 20) || 5;
     let page = req.query.page - 1 || 0;
     let sort = req.query.sort || "_id"
-
-
-
     let reverse = req.query.reverse == "yes" ? 1 : -1
     try {
         let data = await CommentsModel
@@ -39,6 +36,17 @@ router.get("/allComments", auth, async (req, res) => {
     }
 })
 
+router.get("/count", async(req,res) => {
+    let perPage = Math.min(req.query.perPage, 20) || 5;
+    try{
+      let data = await CommentsModel.countDocuments(perPage);
+      res.json({count:data,pages:Math.ceil(data/perPage)})
+    }
+    catch(err){
+      console.log(err);
+      res.status(502).json({err})
+    }
+  })
 
 router.post("/", auth, async (req, res) => {
     let validBody = validateComments(req.body);
