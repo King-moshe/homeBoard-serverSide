@@ -1,5 +1,5 @@
 const express = require("express");
-const { authAdmin, authConstructor, auth } = require("../middlewares/auth");
+const { authAdmin } = require("../middlewares/auth");
 const { validateProject, ProjectModel } = require("../models/projectModel")
 
 const router = express.Router();

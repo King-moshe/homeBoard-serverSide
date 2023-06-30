@@ -67,7 +67,7 @@ exports.validateUserPut = (_reqBody) => {
     story: Joi.number().max(50).allow(null, ""),
     apartment: Joi.number().max(300).allow(null, ""),
     files: Joi.array().max(11100).allow(null, ""),
-    comments: Joi.array().max(11100).allow(null, "")
+    comments: Joi.array().max(11100).allow(null, ""),
   });
   return joiSchema.validate(_reqBody);
 };

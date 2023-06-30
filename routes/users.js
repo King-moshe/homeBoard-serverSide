@@ -64,6 +64,17 @@ router.get("/userFiles/:id", auth, async (req, res) => {
   }
 })
 
+// router.get("/userMissions/:id", async (req, res) => {
+//   try {
+//     let user = await UserModel.findOne({ _id: req.params.id }, { password: 0 });
+//     res.json(user.missions);
+//   }
+//   catch (err) {
+//     console.log(err);
+//     res.status(502).json({ err })
+//   }
+// })
+
 
 router.get("/singleProject/:projectName/:buildingName", async (req, res) => {
   const pName = req.params.projectName;
@@ -104,7 +115,7 @@ router.post("/", authAdmin, async (req, res) => {
     user.password = await bcrypt.hash(user.password, 10);
     await user.save();
 
-    user.password = "***"
+    user.password = "*****"
     res.json(user);
   }
   catch (err) {
@@ -132,7 +143,6 @@ router.post("/logIn", async (req, res) => {
       return res.status(401).json({ msg: "Email or Password Worng." })
     }
     let token = createToken(user._id, user.role, user.name)
-    // res.json({token:token})
     res.json({ token, role: user.role, name: user.name })
   }
   catch (err) {
@@ -231,7 +241,7 @@ router.post('/:userId/comments', async (req, res) => {
     user.comments.push(comment, writeComment);
     // Save the updated user
     await user.save();
-    res.status(200).json({ message: 'Comment added successfully', user});
+    res.status(200).json({ message: 'Comment added successfully', user });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal server error' });
@@ -253,7 +263,5 @@ router.get('/:userId/comments', async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 });
-
-router.get
 
 module.exports = router;
