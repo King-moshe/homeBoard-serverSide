@@ -64,18 +64,6 @@ router.get("/userFiles/:id", auth, async (req, res) => {
   }
 })
 
-// router.get("/userMissions/:id", async (req, res) => {
-//   try {
-//     let user = await UserModel.findOne({ _id: req.params.id }, { password: 0 });
-//     res.json(user.missions);
-//   }
-//   catch (err) {
-//     console.log(err);
-//     res.status(502).json({ err })
-//   }
-// })
-
-
 router.get("/singleProject/:projectName/:buildingName", async (req, res) => {
   const pName = req.params.projectName;
   const BuildingName = req.params.buildingName;
@@ -263,5 +251,7 @@ router.get('/:userId/comments', async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 });
+
+
 
 module.exports = router;

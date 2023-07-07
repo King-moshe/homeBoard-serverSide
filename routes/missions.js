@@ -38,4 +38,27 @@ router.post('/', async (req, res) => {
   }
 })
 
+router.delete('/:id', async (req, res) => {
+  try {
+    let id = req.params.id;
+    let data = await MissionModel.deleteOne({ _id: id });
+    res.json(data);
+  } catch (error) {
+    console.log(error);
+    res.status(502).json({ error })
+
+  }
+})
+
+router.get('/userMissions/:user_id', async (req, res) => {
+  try {
+    const user_id = req.params.user_id;
+    const missions = await MissionModel.find({ user_id });
+    res.json(missions);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 module.exports = router;

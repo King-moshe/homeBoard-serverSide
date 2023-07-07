@@ -16,6 +16,7 @@ const userSchema = new mongoose.Schema({
   apartment: Number,
   files: Array,
   comments: Array,
+  missions: Array,
   date_created: {
     type: Date,
     default: Date.now
@@ -51,6 +52,7 @@ exports.validateUser = (_reqBody) => {
     apartment: Joi.number().max(300).required(),
     files: Joi.array().max(11100).allow(null, ""),
     comments: Joi.array().max(11100).allow(null, ""),
+    missions: Joi.array().max(150).allow(null, ""),
   });
   return joiSchema.validate(_reqBody);
 };
