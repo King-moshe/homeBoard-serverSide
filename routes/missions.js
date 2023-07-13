@@ -46,7 +46,6 @@ router.delete('/:id', async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(502).json({ error })
-
   }
 })
 
@@ -60,5 +59,18 @@ router.get('/userMissions/:user_id', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
+
+router.get("/count", authAdmin, async (req, res) => {
+  let perPage = Math.min(req.query.perPage, 20) || 5;
+  try {
+    let data = await MissionModel.countDocuments(perPage);
+    res.json({ count: data, pages: Math.ceil(data / perPage) })
+  }
+  catch (err) {
+    console.log(err);
+    res.status(502).json({ err })
+  }
+})
 
 module.exports = router;
