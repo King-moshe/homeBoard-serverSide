@@ -1,6 +1,6 @@
 const express = require("express");
-const { MissionModel } = require("../models/missionModel");
-const { authAdmin } = require("../middlewares/auth");
+const { MissionModel, validateMissionPut } = require("../models/missionModel");
+const { authAdmin, auth } = require("../middlewares/auth");
 const router = express.Router();
 
 router.get("/", async (req, res) => {
@@ -72,5 +72,22 @@ router.get("/count", authAdmin, async (req, res) => {
     res.status(502).json({ err })
   }
 })
+
+router.put('/:id', async (req, res) => {
+  try {
+    const mission = await MissionModel.findById(req.params.id);
+    if (!mission) {
+      return res.status(404).send('Mission not found');
+    }
+    mission.execution_status = req.body.execution_status;
+    await mission.save();
+    res.send(mission);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Server Error');
+  }
+});
+
+
 
 module.exports = router;

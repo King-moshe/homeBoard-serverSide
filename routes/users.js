@@ -185,21 +185,15 @@ router.put('/:userId/comments', async (req, res) => {
   if (error) {
     return res.status(400).send(error.details[0].message);
   }
-
   try {
     const { userId } = req.params;
     const { text } = req.body;
-
     const user = await User.findById(userId);
     if (!user) {
       return res.status(404).send('User not found');
     }
-
-    // Add the new comment to the user's comments array
     user.comments.push({ text });
-
     await user.save(); // Save the updated user
-
     res.status(200).json(user);
   } catch (error) {
     console.error(error);
@@ -210,22 +204,16 @@ router.put('/:userId/comments', async (req, res) => {
 
 router.patch("/comments/:id/", async (req, res) => {
   try {
-    // Extract the "id" parameter from the request URL
     const id = req.params.id;
-    // Get the new comment from the request body
     const newComment = req.body;
-    // Find the user by id and update the "comments" array with the new comment using $push
     const data = await UserModel.findOneAndUpdate(
       { _id: id },
       { $push: { comments: newComment } },
       { new: true }
     );
-
-    // Return the updated user data in the response
     res.json(data);
   } catch (err) {
     console.log(err);
-    // If an error occurs, log it to the console and return a 502 Bad Gateway response with the error object
     res.status(502).json({ err });
   }
 });

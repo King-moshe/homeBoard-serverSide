@@ -70,6 +70,8 @@ exports.validateUserPut = (_reqBody) => {
     apartment: Joi.number().max(300).allow(null, ""),
     files: Joi.array().max(11100).allow(null, ""),
     comments: Joi.array().max(11100).allow(null, ""),
+    missions: Joi.array().max(150).allow(null, ""),
+
   });
   return joiSchema.validate(_reqBody);
 };
