@@ -83,23 +83,16 @@ router.get("/singleProject/:projectName/:buildingName", authAdmin, async (req, r
 
 
 // sign up
-router.post("/", authAdmin, async (req, res) => {
-  // Middleware function authAdmin is executed before the main handler function
+router.post("/", async (req, res) => {
   let validBody = validateUser(req.body);
   if (validBody.error) {
-    // If validation fails, return a 400 Bad Request response with the validation error details
     return res.status(400).json(validBody.error.details);
   }
   try {
-    // Create a new UserModel instance with the request body
     let user = new UserModel(req.body);
-    // Hash the user's password using bcrypt with a salt factor of 10
     user.password = await bcrypt.hash(user.password, 10);
-    // Save the user to the database
     await user.save();
-    // Hide the user's password before sending the response
     user.password = "***";
-    // Return the user object in the response
     res.json(user);
   }
   catch (err) {

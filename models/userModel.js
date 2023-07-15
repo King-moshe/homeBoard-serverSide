@@ -48,7 +48,7 @@ exports.validateUser = (_reqBody) => {
     city_name: Joi.string().min(2).max(50).required(),
     street_name: Joi.string().min(2).max(50).required(),
     building_name: Joi.string().min(1).max(40).allow('', null),
-    story: Joi.number().max(50).required(),
+    story: Joi.number().required(),
     apartment: Joi.number().max(300).required(),
     files: Joi.array().max(11100).allow(null, ""),
     comments: Joi.array().max(11100).allow(null, ""),
