@@ -98,6 +98,7 @@ router.get("/count", authAdmin, async (req, res) => {
     console.log(err);
     res.status(502).json({ err })
   }
-})
+}) 
 
 module.exports = router;
+ 
